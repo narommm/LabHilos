@@ -6,12 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import javax.swing.JButton;
+//import.javax.swing.JFrame;
 public class Gui extends JFrame {
 
     private JPanel [] paneles;
     private JLabel [] labels;
     private JButton inicio;
+    private JButton reinicio;
     private String[] nombres = {"canguro","tortuga","dragon"};
 
     public Gui(){
@@ -26,6 +28,8 @@ public class Gui extends JFrame {
         paneles = new JPanel[3];
         labels = new JLabel[3];
         inicio = new JButton("Inicio");
+        reinicio = new JButton("Reinicio");
+        
         Container container = getContentPane();
         //llenando el panel
         for (int i=0 ; i < 3 ; i++)
@@ -39,6 +43,10 @@ public class Gui extends JFrame {
         }
         inicio.setBounds(10,0,100,30);
         container.add(inicio);
+                
+        reinicio.setBounds(10, 0, 100, 30);
+        container.add(reinicio);
+        reinicio.setVisible(false);
         inicio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,6 +56,27 @@ public class Gui extends JFrame {
                 canguro.start();
                 tortuga.start();
                 dragon.start();
+                inicio.setVisible(false);
+                reinicio.setVisible(true);
+                
+            }
+        });
+        
+        reinicio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AnimalThread canguro = new AnimalThread("canguro",labels[0].getX(),labels[0].getY(),0,labels[0]);
+                AnimalThread tortuga = new AnimalThread("colibri",labels[1].getX(),labels[1].getY(),0,labels[1]);
+                AnimalThread dragon = new AnimalThread("dragon",labels[2].getX(),labels[2].getY(),0,labels[2]);
+                
+                canguro.setPaso(-10);
+                canguro.start();
+                tortuga.setPaso(-10);
+                tortuga.start();
+                dragon.setPaso(-10);
+                dragon.start();
+              
+            
             }
         });
         setSize(700,650);
